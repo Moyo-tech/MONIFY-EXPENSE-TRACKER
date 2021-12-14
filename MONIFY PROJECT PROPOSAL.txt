@@ -1,0 +1,229 @@
+﻿MONIFY -  An Expense Tracker program 
+PROJECT PROPOSAL
+An Expense tracker Program implemented in a Graphical User Interface allows users to add income and expense based on categories & date (  Food & Drinks, Groceries, Shopping, Housing, Transportation, Life & Entertainment, Miscellaneous). 
+
+
+Add budget per month and budget on categories, with a warning functionality that reminds the user when reaching the budget limit—an operation to input debts(Amount borrowed, date borrowed, borrowee, due loan date). 
+
+
+ An operation to view the statistics of their spending and where their money goes based on categories in a visual representation pie chart (shows the total amount spent in each category) and bar chart (compares the total expense over time to the individual income). The functionality of a shopping list and emergency fund is also added to the program to allow for savings for future purposes and accountable spending when going shopping.
+
+
+We would create a CSV file using pandas that stores information in a database format. It is in this file that the program would store the user data and also log expenditures. The entire program would be in a GUI, which we would implement with Tkinter. 
+
+
+CLASSES AND RELATIONSHIPS:
+class Monify: This class would perform the main operation of an expense tracker by collecting the user income, their expense and also encouraging the habit of saving by having a budget,  emergency fund, and shopping list method. It has a relationship with the internal database, where user input and information storage and retrieval is done. 
+
+
+class Debt_account: Debts are also expenses; this class keeps track of the user debts and gives them the ability to pay them back. It has a relationship with the internal database, like the class Monify. Because when a debt is made, it is deducted from the user income. And are seen as expenses too 
+
+
+class Statistics: This class allows the user to visualise their spending statistics in a bar chart comparing their income expenses and a pie chart that shows their spending habits in each category. It has a relationship with the internal database as it retrieves the data stored in the CSV file to plot the graph. It also has a relationship with the class Monify because it collates the information of income and expenses stored. 
+
+
+PSEUDOCODE:
+*importing modules*
+Import Tkinter #graphical user interface 
+From Panda import DataFrame as df  #Allows input of information in a CSV file format; this would be our storage. 
+Import panda as pd
+Import datetime 
+Import matplotlib #to plot the statistics 
+
+
+
+Def  tracker(database creation in csv file)(TAKES PARAMETERS → date, income = 0, food & drinks = 0, groceries =0, life & entertainment = 0, housing & transport = 0, miscellaneous = 0)
+        DEFINE database with panda to save as CSV format
+        CREATE rows and columns with data values initialised to zero
+        CHECK database for clashing values
+                IF values are repeated for a date return an error message
+                ELSE append to the database the new values
+
+                
+class Monify:
+        Method to add_income:
+                try:
+                        collect user input of income date
+                        convert the string to date format
+                        collect user input of income_amount
+                        pass in income and date to the csv file
+                except an error:
+                        Display a message to correct the error
+                        call add_income()
+                call menu() function
+
+        Method to add expenditure():
+                print out the list of categories to choose from to add expense
+
+                while True:
+                        Try:
+                                GET USER category choice
+                        except ValueError:
+                                print(not a valid option)
+                                continue
+                
+                if user response is 1:
+                        Enter expenditure date for that category
+                        convert string to datetime
+                        get user amount spent on that category
+                        pass date and expense amount into the csv file as arguments
+                        Ask user if they want to perform another operation
+                        call add_expenditure again
+
+                if user response is 2:
+                        ..... The same code for all the categories
+        
+        Method to view shopping list:
+                check if file exists:
+                        read the file 
+                        print to the user their most recent shopping list
+                if file doesn't exist:
+                        print you have not added any shopping list 
+
+        
+        Method to add shopping list:
+                shooping list ={}
+                loop with a while loop:
+                        Get user input of Item to add to shopping list
+                        Get user price of the Item
+                        Add value to dictionary
+                        Ask if user wants to add again
+
+                        If yes:
+                                continue looping
+                        if no:
+                                Create shopping list CSV
+                Ask if user would like to view shopping list
+                        if yes:
+                                call view_shopping list()
+                        if no:
+                                call menu()
+
+function debt_data:
+        Creates the CSV file by reading writing and opening 
+
+class Debt account(Monify):
+        method to add_debt_record():
+                get user amount they borrowed
+                get date of borrow
+                get name of lender
+                get due date
+
+                pass the variables into the debt_data
+        
+        method to pay_debt():
+                read the csv file 
+                display to the user their debts
+                Get user choice of loan to pay back or have paid back
+                CHECK IF CHOICE EXISTS:
+                        remove data from csv
+
+class Sttistics:
+        method for spending chart:
+                collect user input of month they would like to view 
+                store the categories as headers
+
+                try:
+                        read the csv
+                        find the sum of all categories in that month respectively and store into a list
+
+                        set the colors of the chart
+
+                        set the plotting details 
+
+                        set the legend and title 
+
+                        plot the graph 
+                
+                except the file is not found
+                        input an error
+
+
+        Income_expense():
+                get all the month names and store in a list
+
+                set an empty list for income and expense
+
+                loop through the list of month names:
+                        read the csv file of each month
+
+                        find the total sum of income and append to the list
+
+                        find the total sum of categories and append to expense
+
+                        total all the expenses
+
+                plot the graph detail color, legend
+                
+                show the graph
+menu function:
+        list of operation for user to choose from. 
+        When user picks it calls the respective functions
+
+
+TEST SCENARIOS
+ (Note test scenarios are number in 1, their related test cases are below it)
+
+
+1. Test Class Monify(method testing):
+Test scenario 1: Check input functionality for add income method
+* Test case 1: Check the result on entering the correct data type value as input 
+* Test case 2: Check the result on entering a wrong data type value as input
+* Test case 3: Check the result on entering a null value 
+* Test case 4: Check to ensure that user input is added to the database 
+        Test Scenario 2: Check input functionality for add_expense
+* Test case 1: Check the result on entering the correct data type value as input for the expenditure
+* Test case 2: Check the result on entering a wrong data type value as input for expenditure 
+* Test case 3: Check the result on entering a null value for the input of expense
+* Test case 4:  Write to the database after checking if the data type is valid for each argument required.
+        Test Scenario 3: Check input functionality and storage functionality for the add_budget  method
+* Test case 1: Check result when user input is the right datatype
+* Test case 2: Check result when user input is the wrong datatype
+* Test case 3: Check to enure that add_budget writes to the dataframe 
+        Test Scenario 4: Check user input functionality and storage for the emergency_fund method
+* Test case 1: Check result when user input is the right data type
+* Test case 2: Check to ensure that emergency fund rights to the dataframe 
+* Test case 3: Check to ensure that view_emergency fund correctly adds the data in the dataframe 
+* Test case 4: Check the result when the user inputs a wrong data type
+        Test Scenario 5: Check user input functionality for shopping list method 
+* Test case 1: Check result when user input is a wrong or null datatype
+* Test case 2: Ensure that add_shopping list writes the user input to the dataframe 
+* Test case 3: Ensure that user data can be retrieved and displayed to the user when they want to view_shopping 
+
+
+2. Test Class debt_account(method testing) :  
+Test Scenario 1: Check input functionality for the Add_debt method
+* Test_case 1: Collect user details of loan amount and user owed.  
+* Test case 2: Check results on entering the right data type for the loan amount 
+* Test case 3: Check results on entering the wrong data type for the loan amount
+* Test case 4: Check results on entering a null value  for the loan amount 
+        Test Scenario 2: Check storage functionality for the Add_debt method
+* Test case 1: Ensure that add_debt_record writes to the dataframe  
+        Test Scenario 3:  Check input functionality for pay debt method 
+* Test case 1: Check if the user choice of debt to be paid exists in the dataframe. 
+* Test case 2: Check results on entering the wrong choice of debt.
+* Test case 6: Ensure that pay_debt removes the debt record from the dataframe if it exists 
+
+
+3.   Test class Statistics(method testing): Checking if statistical graphs are correctly plotted. 
+Test Scenario 1: Right Visualisation of the Income_expense chart
+* Test_case 1: Correct formula to add total expense from the CSV file. 
+*  Test case 2: Correct plotting the user’s income and total expense from the dates given in a bar chart. 
+* Test case 3:  Correct visualisation with income on the left and expense on the right, with amounts on the y-axis. 
+        Test Scenario 2: Right visualisation of the spending chart 
+* Test case 5:  Correct formula to add a total expense in each category from the CSV file. For the spending method 
+* Test case 6: Plotting of each total expense category in a pie chart
+* Test case 7: Easy to understand visualisation of spending chart, with key elements shown (chart title, legends)
+4. Test Database storage functionality with Pandas
+* Test case 1: User inputs are correctly stored in the CSV database with headings; Data, Income, Expense, and category. 
+* Test case 2: Data can be retrieved from the database to show statistics and perform operations 
+
+
+DATABASE TO STORE
+* Pandas
+
+
+
+
+VISUALISATION OF THE PROGRAM IN A GUI USING TKINTER
+* There are 2 parts to the program the main.py and the Tkinter.py which can run independently. The tkinter.py can be implemented as a python file and can also be run on the CLI
